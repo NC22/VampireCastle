@@ -19,7 +19,6 @@
     }
     
     .nw-characters li {
-        margin-bottom : 12px;
     }
     
     .nw-characters a {
@@ -30,6 +29,13 @@
         display: inline-block;
         width: 100%;  
         font-weight: bold;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        transition : 0.2s background-color;
+    }
+    
+    .nw-characters a:hover {
+        background: #757575;
     }
     
     .nw-characters img {
@@ -39,6 +45,7 @@
         border-radius: 32px;   
         vertical-align: middle;
         margin-right: 6px;
+        margin-left: 6px;
     }
     
     .nw-page {
@@ -48,10 +55,11 @@
     }
     
     .nw-page-block {
-        padding: 16px;
+        padding: 11px;
         background: #585858;
         margin-bottom: 16px;
         color: #cdcdcd;
+        box-sizing: border-box;
      }
      
      .nw-page-block-content a {
@@ -78,13 +86,18 @@
      }
      
      .nw-menu h3 {
-        margin : 0;
-        padding : 0;
-        margin-bottom : 16px;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 7px;
+        padding-left: 12px;
+        background: #757575;
+        line-height: 44px;
      }
      
     .nw-menu .nw-page-block {
         margin-right: 12px;
+        padding : 0;
+        padding-bottom: 1px;
      }
     
     .nw-page-character-info img {
@@ -239,6 +252,37 @@
         padding-right : 0px; 
         width : auto;
     }
+    
+    .nw-menu-block-fixed {
+        position: fixed;
+        margin-top : -70px;
+        padding-right: 24px;
+    }
+    
+    @media (max-width: 1024px) {
+        
+        .nw-page {
+            width : 95%;
+            
+        }
+        
+        .nw-characters a {
+            font-size: 30px;
+        }
+        
+       .nw-menu, .nw-page-blocks {
+            float: none;
+            display: block;
+            width: 100%;
+        }
+        
+        .preview {
+            height : 240px;
+        }
+        .nw-menu .nw-page-block {
+            margin-right : 0;
+        }
+    }
 </style>
 <title>Лисье королевство и Вампирский замок</title>
 </head>
@@ -247,18 +291,18 @@
 
 <div class="nw-page">
 
-    <h1 style="    color: #cdcdcd; margin-top : 0;">Лисье королевство и Вампирский замок</h1>
+    <h1 class="top" style="color: #cdcdcd; margin-top : 0;">Лисье королевство и Вампирский замок</h1>
 
     <div class="nw-menu">
-        <div class="nw-page-block">
+        <div class="nw-page-block nw-menu-block">
             <h3>Досье</h3>
-            <ul class="nw-characters">
+            <ul class="nw-characters nw-scroll">
                 <li><a href="#masha"><img src="img/avatars/masha.png">Маша</a></li>
-                <li><a href="#masha"><img src="img/avatars/olesya.png">Феечка Олеся</a></li>
-                <li><a href="#masha"><img src="img/avatars/ruta.png">Рута</a></li>
-                <li><a href="#masha"><img src="img/avatars/help.png">Работяга-подручный</a></li>
-                <li><a href="#masha"><img src="img/avatars/vampi.png">Вампирша</a></li>
-                <li><a href="#masha"><img src="img/avatars/katya.png">Катерина и робо-стражи</a></li>
+                <li><a href="#olesya"><img src="img/avatars/olesya.png">Феечка Олеся</a></li>
+                <li><a href="#ruta"><img src="img/avatars/ruta.png">Рута</a></li>
+                <li><a href="#help"><img src="img/avatars/help.png">Работяга-подручный</a></li>
+                <li><a href="#vampi"><img src="img/avatars/vampi.png">Вампирша</a></li>
+                <li><a href="#katya"><img src="img/avatars/katya.png">Катерина и робо-стражи</a></li>
             </ul>
             
             <!--h3>Описание мира</h3>
@@ -292,19 +336,19 @@
                 живут пока не закончится запас маны или не будет достигнута цель.</p>
                 
                 <h3>Королевство лисичек</h3>
-                <p><a href="#ruta">Рута</a>, её подручный и рободевочки относятся к Королевству лисичек - королевская семья и многие простые жители выделяются
-                характерными ушками и хвостиками - обмундирование, общая эстетика окружения может также использовать эти элементы</p>
-                <p>На королевство часто наподают вражеские робо-пешки и в округе за стенами замка как правило бывает не безопасно - хоть и не все жители могут жить 
+                <p><a href="#ruta">Рута</a>, её подручный и рободевочки относятся к Королевству лисичек. Королевская семья и многие простые жители выделяются
+                характерными ушками и хвостиками; обмундирование, общая эстетика окружения может также использовать эти элементы.</p>
+                <p>На королевство периодически нападают вражеские робо-пешки и в округе за стенами замка как правило бывает не безопасно - хоть и не все жители могут жить 
                 только в стенах замка - посевные поля и часть поселений находится поблизости и менее защищена.
                 Основную опасность представляет запретный лес - где скопилось большое количество пауков, также могут представлять опасность вражеские робо-пешки разведчики</p>
                           
             <div class="previews" data-key="world">
-                <div class="preview world-preview" data-image="orig/knight_girl (3).png" style="background-image : url('img/look/knight_girl (3).png')"></div>
-                <div class="preview world-preview" data-image="orig/bots (2).png" style="background-image : url('img/look/bots (2).png')"></div>
-                <div class="preview world-preview" data-image="orig/miscc2.png" style="background-image : url('img/look/miscc2.png')"></div>
-                <div class="preview world-preview" data-image="orig/bots3.png" style="background-image : url('img/look/bots3.png')"></div>
-                <div class="preview world-preview" data-image="orig/foxbot (1_0).png" style="background-image : url('img/look/foxbot (1_0).png')"></div>
-                <div class="preview world-preview" data-image="orig/foxbot3.png" style="background-image : url('img/look/foxbot3.png')"></div>
+                <div class="preview world-preview" data-image="orig/foxkingdom/1.png" style="background-image : url('img/look/foxkingdom/1.png')"></div>
+                <div class="preview world-preview" data-image="orig/foxkingdom/2.png" style="background-image : url('img/look/foxkingdom/2.png')"></div>
+                <div class="preview world-preview" data-image="orig/foxkingdom/3.png" style="background-image : url('img/look/foxkingdom/3.png')"></div>
+                <div class="preview world-preview" data-image="orig/foxkingdom/4.png" style="background-image : url('img/look/foxkingdom/4.png')"></div>
+                <div class="preview world-preview" data-image="orig/foxkingdom/5.png" style="background-image : url('img/look/foxkingdom/5.png')"></div>
+                <div class="preview world-preview" data-image="orig/foxkingdom/6.png" style="background-image : url('img/look/foxkingdom/6.png')"></div>
                 
                 <div style="clear : both"></div>
             </div>
@@ -313,7 +357,7 @@
         </div>
         
     
-            <div class="nw-page-block">
+        <div class="nw-page-block" id="ruta">
             
             <div class="nw-page-character-info">
                 <img src="img/avatars/ruta256.png">
@@ -346,7 +390,7 @@
             <div style="clear : both"></div></div>
         </div>
         
-        <div class="nw-page-block">
+        <div class="nw-page-block"  id="masha">
         
       
             <div class="nw-page-character-info">
@@ -381,7 +425,7 @@
             
         </div>
         
-        <div class="nw-page-block">
+        <div class="nw-page-block" id="vampi">
             
             <div class="nw-page-character-info">
                 <img src="img/avatars/vampi.png">
@@ -408,7 +452,9 @@
                 
                 <p>По скольку Рута хорошо знает Машу, она могла напросится к Вампирше в гости из любопытства или по поручению самой Маши. 
                 Для Вампирши любые новые люди вызывают большой интерес, потому она будет стараться всячески привлечь внимание Руты и вести себя прилично</p>
-           
+                
+                <p>Когда же гостей нет, Вампирша справляется с одиночеством воспитывая и командуя своим петомцем-летучей мышью Расселом. Они понимают друг-друга. Рассел довольно ленивый и привык к тому что о нем излишне заботятся, но если хорошо попросить может сделать 
+                что-нибудь полезное</p>
            </div>
            
            <div class="previews" data-key="world">
@@ -422,7 +468,7 @@
         </div>
         
         
-        <div class="nw-page-block">
+        <div class="nw-page-block" id="katya">
             
             <div class="nw-page-character-info">
                 <img src="img/avatars/katya.png">
@@ -434,7 +480,7 @@
             
             <div class="nw-page-block-content">
                   
-            <p>Катерина - одна из робо-девочек стражей. За счет высокого роста выглядит устрашающе. Сама по себе очень добрая и любознательная, является любимицей ушастой принцессы. Создана королевским отделом разработки. Для нее первостепенной является защита королевской семьи. </p>
+            <p>Катерина - одна из робо-девочек стражей. За счет высокого роста выглядит устрашающе. Сама по себе очень добрая и любознательная, является любимицей длинноухой принцессы. Создана королевским отделом разработки. Для нее первостепенной является защита королевской семьи. </p>
             <p>При дворе может быть много рободев - совместная разработка королевских магов и инженеров. Они могут как выполнять поручения так и быть вовлечены в социальную жизнь и просто радовать глаз окружающих</p>
            
            </div>
@@ -504,6 +550,83 @@
             }
         
 	}
+    
+    var getScrollTop = function() {
+
+        var scrollTop = (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
+        return scrollTop;
+    }
+
+    var getViewport = function() {
+
+        var elem = (document.compatMode === "CSS1Compat") ? document.documentElement : document.body;    
+        return { screenHeight: elem.clientHeight, screenWidth: elem.clientWidth };
+    }
+    
+    var updateDynPos = function() {
+        
+        var menu = document.getElementsByClassName('nw-menu-block')[0];
+        if (getViewport().screenWidth < 1000) {
+            menu.classList.remove('nw-menu-block-fixed');
+            return;
+        }
+        
+        var header = document.querySelector('.nw-page-blocks .nw-page-block');
+        var fixedHeight = header.getBoundingClientRect().y + getScrollTop() + 16;
+        var width = 0;
+        
+        if (!menu.getAttribute('data-width')) {
+            width = menu.getBoundingClientRect().width;
+            menu.setAttribute('data-width', width);
+        } else {
+            width = parseInt(menu.getAttribute('data-width'));
+        }
+        
+        if (getScrollTop() > fixedHeight) {
+            menu.classList.add('nw-menu-block-fixed');
+            menu.style.width = width + 'px';
+        } else {
+            menu.classList.remove('nw-menu-block-fixed');
+            menu.style.width = '';
+            menu.removeAttribute('data-width');
+        }
+    }
+    
+    window.addEventListener('resize', updateDynPos);
+    window.addEventListener('scroll', updateDynPos);
+    
+    updateDynPos();
+    
+    document.querySelectorAll('.nw-scroll a').forEach(function(anchor) {
+    
+        anchor.addEventListener('click', function(e) {
+        
+            console.log(1);
+            e.preventDefault();
+            
+            var targetID = this.getAttribute('href').substring(1);
+            var targetElement = document.getElementById(targetID);
+            if (targetElement) {
+            
+            
+                var offset = 16; 
+                var bodyRect = document.body.getBoundingClientRect().top;
+                var elementRect = targetElement.getBoundingClientRect().top;
+                var elementPosition = elementRect - bodyRect;
+                var offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: 'smooth'
+                });
+                
+              //  targetElement.scrollIntoView({
+              //   behavior: 'smooth'
+              // });
+            }
+        });
+      
+    });
 </script>
 
 </body>
