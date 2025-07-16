@@ -1,0 +1,282 @@
+
+    html, body {
+        background : #2f2f2f;
+        margin: 0;
+        padding: 0;
+        font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        /* font-size: 18px; */
+        font-size: 16px;
+    }    
+    
+    .nw-characters {
+    
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .nw-characters li {
+    }
+    
+    .nw-characters a {
+    
+        font-size : 16px;
+        text-decoration : none;
+        color: #cdcdcd;
+        display: inline-block;
+        width: 100%;  
+        font-weight: bold;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        transition : 0.2s background-color;
+    }
+    
+    .nw-characters a:hover {
+        background: #757575;
+    }
+    
+    .nw-characters img {
+    
+        width: 50px;
+        height: 50px;
+        border-radius: 32px;   
+        vertical-align: middle;
+        margin-right: 6px;
+        margin-left: 6px;
+    }
+    
+    .nw-page {
+        width: 80%;
+        margin: 0 auto;
+        padding-top: 20px;
+    }
+    
+    .nw-page-block {
+        padding: 11px;
+        background: #585858;
+        margin-bottom: 16px;
+        color: #cdcdcd;
+        box-sizing: border-box;
+     }
+     
+     .nw-page-block-content a {
+     
+        font-weight: bold;
+        color: #c6cdcd;
+     }
+     
+     .nw-page-block h2 {
+     
+        padding: 0;
+        margin: 0;
+        margin-bottom: 16px;    
+    }
+     
+     .nw-page-blocks {
+        width: 80%;
+        float: right;
+     }
+     
+     .nw-menu {
+        width: 20%;
+        float: left;
+     }
+     
+     .nw-menu h3 {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 0px;
+        padding-left: 12px;
+        background: #757575;
+        line-height: 44px;
+     }
+     
+    .nw-menu .nw-page-block {
+        margin-right: 12px;
+        padding : 0;
+        padding-bottom: 1px;
+     }
+    
+    .nw-page-character-info img {
+        float : left;
+        margin-right : 16px;
+    }
+    
+    .preview {
+        width: 33%;
+        float: left;
+        height: 390px;
+        background-size: cover;
+        cursor : pointer;
+    }
+
+    /* Gallery viewer */
+
+
+    .gallery-ImgView {
+         position : fixed!important;
+         top : 0px!important;
+         left : 0px!important;
+         background : rgba(0, 0, 0, 0.80);
+         transition : opacity 0.5s;
+         width : 100%!important;
+         height : 100%!important;
+         z-index : 1008;
+         visibility : hidden;
+         opacity : 0;
+    }
+
+    .gallery-ImgView-active {
+        visibility : visible;
+        opacity : 1;
+    }
+
+    .gallery-ImgView-active.gallery-ImgView-fade {
+         opacity : 0;
+    }
+
+    .gallery-ImgView-loader.gallery-ImgView-loader-hidden {
+        display : none;
+    }
+
+    .gallery-ImgView-img {
+         text-align : center;
+    }
+
+    .gallery-ImgView-img-self {
+        background: rgb(255, 255, 255, 0.79);
+        max-width : unset;
+    }
+
+    .gallery-ImgView-loader {
+        
+        /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader */
+        
+        position : absolute;
+        
+        left : 50%;  
+        top : 50%;
+        
+        border: 14px solid rgba(243, 243, 243, 0.67);
+        border-radius: 50%;
+        border-left: 14px solid #017dfd;
+
+        animation: galleryLoaderSpin 2s linear infinite;
+
+        width: 80px;
+        height: 80px;
+        
+        margin: -40px;
+        
+        box-sizing: border-box;
+    }
+
+    @keyframes galleryLoaderSpin {
+         0% {
+             transform: rotate(0deg);
+        }
+         100% {
+             transform: rotate(360deg);
+        }
+    }
+
+    .gallery-ImgView-btn  {
+        text-align : center; 
+        padding : 9px; 
+        box-sizing: border-box; 
+        cursor : pointer; 
+        background: #017dfd;
+        color: #000000;
+        position : absolute; 
+        display : block;
+        width : 32px;
+        height : 32px;
+        font-weight : bold;
+        padding-top: 7px;
+        font-family: Tahoma, sans-serif;
+        padding-left: 8px;
+    }
+
+    .gallery-ImgView-btn:hover, .gallery-ImgView-btn:focus {	
+        background: rgb(44 145 199 / 85%);
+    }
+
+    .gallery-ImgView-btn-close  {
+        padding-top: 9px;
+    }
+
+    .gallery-ImgView-btn-prev  {
+        padding-left: 7px;
+    }
+
+    .gallery-ImgView-btn-next {
+        padding-left: 9px;
+    }
+
+    .gallery-ImgView-btn-info {
+        font-size: 16px;
+        padding : 0;
+        line-height : 32px;
+    }
+
+    .gallery-ImgView-active, .material-image-view-btns {
+        visibility : visible;
+        opacity : 1;
+    }
+
+    .gallery-ImgView-btns-hidden, .gallery-ImgView-btn-hidden {
+        opacity : 0;
+        pointer-events: none;
+    }
+
+    .gallery-ImgView-btn svg  {
+        width : 16px;
+        vertical-align: baseline;
+    }
+
+    .gallery-ImgView-btn svg g {
+        stroke: #ffffff;
+        fill: #ffffff;
+    }
+
+    .gallery-ImgView-btn svg g line {
+        stroke: #ffffff;
+        fill: #ffffff;
+    }
+
+    .gallery-ImgView-lock {
+        overflow : hidden!important; 
+        padding-right : 0px; 
+        width : auto;
+    }
+    
+    .nw-menu-block-fixed {
+        position: fixed;
+        margin-top : -70px;
+        padding-right: 24px;
+    }
+    
+    @media (max-width: 1024px) {
+        
+        .nw-page {
+            width : 95%;
+            
+        }
+        
+        .nw-characters a {
+            font-size: 30px;
+        }
+        
+       .nw-menu, .nw-page-blocks {
+            float: none;
+            display: block;
+            width: 100%;
+        }
+        
+        .preview {
+            height : 240px;
+        }
+        .nw-menu .nw-page-block {
+            margin-right : 0;
+        }
+    }
