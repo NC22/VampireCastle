@@ -323,10 +323,15 @@
     
     var isInViewport = function(el, offset) {
         var rect = el.getBoundingClientRect();
-        return (
-            rect.top - offset < window.innerHeight &&
-            rect.bottom > 0
-        );
+        
+        if (el.getAttribute('data-key') == 'ruta'){
+        
+        console.log(getScrollTop() + getViewport().screenHeight + offset);
+        console.log(rect.y + getScrollTop());
+        }
+        if (getScrollTop() + getViewport().screenHeight + offset > rect.y + getScrollTop()) {
+            return true;
+        }
     }
     
     var renderPreviews = function(container) {    
@@ -340,32 +345,32 @@
         var menu = document.getElementsByClassName('nw-menu-block')[0];
         if (getViewport().screenWidth < 1000) {
             menu.classList.remove('nw-menu-block-fixed');
-            return;
-        }
-        
-        var header = document.querySelector('.nw-page-blocks .nw-page-block');
-        var fixedHeight = header.getBoundingClientRect().y + getScrollTop() + 16;
-        var width = 0;
-        
-        if (!menu.getAttribute('data-width')) {
-            width = menu.getBoundingClientRect().width;
-            menu.setAttribute('data-width', width);
+            
         } else {
-            width = parseInt(menu.getAttribute('data-width'));
-        }
         
-        if (getScrollTop() > fixedHeight) {
-            menu.classList.add('nw-menu-block-fixed');
-            menu.style.width = width + 'px';
-        } else {
-            menu.classList.remove('nw-menu-block-fixed');
-            menu.style.width = '';
-            menu.removeAttribute('data-width');
+            var header = document.querySelector('.nw-page-blocks .nw-page-block');
+            var fixedHeight = header.getBoundingClientRect().y + getScrollTop() + 16;
+            var width = 0;
+            
+            if (!menu.getAttribute('data-width')) {
+                width = menu.getBoundingClientRect().width;
+                menu.setAttribute('data-width', width);
+            } else {
+                width = parseInt(menu.getAttribute('data-width'));
+            }
+            
+            if (getScrollTop() > fixedHeight) {
+                menu.classList.add('nw-menu-block-fixed');
+                menu.style.width = width + 'px';
+            } else {
+                menu.classList.remove('nw-menu-block-fixed');
+                menu.style.width = '';
+                menu.removeAttribute('data-width');
+            }
         }
-        
         
         document.querySelectorAll('.previews[data-num]').forEach(container => {
-            if (!container.getAttribute('data-rendered') && isInViewport(container, 40)) {
+            if (!container.getAttribute('data-rendered') && isInViewport(container, 200)) {
                 renderPreviews(container);
                 container.setAttribute('data-rendered', 1);
             }
