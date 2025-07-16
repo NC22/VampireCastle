@@ -1,8 +1,505 @@
 <html>
+<head>
+<style>
 
-<title>test</title>
+    html, body {
+        background : #2f2f2f;
+        margin: 0;
+        padding: 0;
+        font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        /* font-size: 18px; */
+        font-size: 16px;
+    }    
+    
+    .nw-characters {
+    
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .nw-characters li {
+        margin-bottom : 12px;
+    }
+    
+    .nw-characters a {
+    
+        font-size : 16px;
+        text-decoration : none;
+        color: #cdcdcd;
+        display: inline-block;
+        width: 100%;  
+        font-weight: bold;
+    }
+    
+    .nw-characters img {
+    
+        width: 50px;
+        height: 50px;
+        border-radius: 32px;   
+        vertical-align: middle;
+        margin-right: 6px;
+    }
+    
+    .nw-page {
+        width: 80%;
+        margin: 0 auto;
+        padding-top: 20px;
+    }
+    
+    .nw-page-block {
+        padding: 16px;
+        background: #585858;
+        margin-bottom: 16px;
+        color: #cdcdcd;
+     }
+     
+     .nw-page-block-content a {
+     
+        font-weight: bold;
+        color: #c6cdcd;
+     }
+     
+     .nw-page-block h2 {
+     
+        padding: 0;
+        margin: 0;
+        margin-bottom: 16px;    
+    }
+     
+     .nw-page-blocks {
+        width: 80%;
+        float: right;
+     }
+     
+     .nw-menu {
+        width: 20%;
+        float: left;
+     }
+     
+     .nw-menu h3 {
+        margin : 0;
+        padding : 0;
+        margin-bottom : 16px;
+     }
+     
+    .nw-menu .nw-page-block {
+        margin-right: 12px;
+     }
+    
+    .nw-page-character-info img {
+        float : left;
+        margin-right : 16px;
+    }
+    
+    .preview {
+        width: 33%;
+        float: left;
+        height: 390px;
+        background-size: cover;
+        cursor : pointer;
+    }
 
+    /* Gallery viewer */
+
+
+    .gallery-ImgView {
+         position : fixed!important;
+         top : 0px!important;
+         left : 0px!important;
+         background : rgba(0, 0, 0, 0.80);
+         transition : opacity 0.5s;
+         width : 100%!important;
+         height : 100%!important;
+         z-index : 1008;
+         visibility : hidden;
+         opacity : 0;
+    }
+
+    .gallery-ImgView-active {
+        visibility : visible;
+        opacity : 1;
+    }
+
+    .gallery-ImgView-active.gallery-ImgView-fade {
+         opacity : 0;
+    }
+
+    .gallery-ImgView-loader.gallery-ImgView-loader-hidden {
+        display : none;
+    }
+
+    .gallery-ImgView-img {
+         text-align : center;
+    }
+
+    .gallery-ImgView-img-self {
+        background: rgb(255, 255, 255, 0.79);
+        max-width : unset;
+    }
+
+    .gallery-ImgView-loader {
+        
+        /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_loader */
+        
+        position : absolute;
+        
+        left : 50%;  
+        top : 50%;
+        
+        border: 14px solid rgba(243, 243, 243, 0.67);
+        border-radius: 50%;
+        border-left: 14px solid #017dfd;
+
+        animation: galleryLoaderSpin 2s linear infinite;
+
+        width: 80px;
+        height: 80px;
+        
+        margin: -40px;
+        
+        box-sizing: border-box;
+    }
+
+    @keyframes galleryLoaderSpin {
+         0% {
+             transform: rotate(0deg);
+        }
+         100% {
+             transform: rotate(360deg);
+        }
+    }
+
+    .gallery-ImgView-btn  {
+        text-align : center; 
+        padding : 9px; 
+        box-sizing: border-box; 
+        cursor : pointer; 
+        background: #017dfd;
+        color: #000000;
+        position : absolute; 
+        display : block;
+        width : 32px;
+        height : 32px;
+        font-weight : bold;
+        padding-top: 7px;
+        font-family: Tahoma, sans-serif;
+        padding-left: 8px;
+    }
+
+    .gallery-ImgView-btn:hover, .gallery-ImgView-btn:focus {	
+        background: rgb(44 145 199 / 85%);
+    }
+
+    .gallery-ImgView-btn-close  {
+        padding-top: 9px;
+    }
+
+    .gallery-ImgView-btn-prev  {
+        padding-left: 7px;
+    }
+
+    .gallery-ImgView-btn-next {
+        padding-left: 9px;
+    }
+
+    .gallery-ImgView-btn-info {
+        font-size: 16px;
+        padding : 0;
+        line-height : 32px;
+    }
+
+    .gallery-ImgView-active, .material-image-view-btns {
+        visibility : visible;
+        opacity : 1;
+    }
+
+    .gallery-ImgView-btns-hidden, .gallery-ImgView-btn-hidden {
+        opacity : 0;
+        pointer-events: none;
+    }
+
+    .gallery-ImgView-btn svg  {
+        width : 16px;
+        vertical-align: baseline;
+    }
+
+    .gallery-ImgView-btn svg g {
+        stroke: #ffffff;
+        fill: #ffffff;
+    }
+
+    .gallery-ImgView-btn svg g line {
+        stroke: #ffffff;
+        fill: #ffffff;
+    }
+
+    .gallery-ImgView-lock {
+        overflow : hidden!important; 
+        padding-right : 0px; 
+        width : auto;
+    }
+</style>
+<title>Лисье королевство и Вампирский замок</title>
+</head>
 <body>
-test git pages
+
+
+<div class="nw-page">
+
+    <h1 style="    color: #cdcdcd; margin-top : 0;">Лисье королевство и Вампирский замок</h1>
+
+    <div class="nw-menu">
+        <div class="nw-page-block">
+            <h3>Досье</h3>
+            <ul class="nw-characters">
+                <li><a href="#masha"><img src="img/avatars/masha.png">Маша</a></li>
+                <li><a href="#masha"><img src="img/avatars/olesya.png">Феечка Олеся</a></li>
+                <li><a href="#masha"><img src="img/avatars/ruta.png">Рута</a></li>
+                <li><a href="#masha"><img src="img/avatars/help.png">Работяга-подручный</a></li>
+                <li><a href="#masha"><img src="img/avatars/vampi.png">Вампирша</a></li>
+                <li><a href="#masha"><img src="img/avatars/katya.png">Катерина и робо-стражи</a></li>
+            </ul>
+            
+            <!--h3>Описание мира</h3>
+            
+            <ul>
+                <li><a href="#masha">Описание концепта</a></li>
+                <li><a href="#masha">Источники вдохновения</a></li>
+            </ul-->
+        </div>
+    </div>
+
+
+    <div class="nw-page-blocks">
+        
+            <div class="nw-page-block">
+        
+            <h2>Описание мира</h2>
+            
+            <div class="nw-page-block-content">
+            
+                <p>Общий визуал и технологии придерживаются около-средневекового сеттинга.</p>
+                <p>В мире есть магия, мифические существа вроде феечек, эльфов, а так же скрытые астральные пространства с магическими существами которые могут представлять опасность если им удастся выбратся.</p>
+                <p>Большинство робо-механизмов которые могут выглядеть чуть более 
+                функционально-современно чем общий уровень технологий этого мира обычно построенны на принципе магических-марионеток и оживают исходя из того какие функции в них заложил маг \ ведьма. 
+                Инженерное дело развивается паралельно в синергии с магией. Для определенных фунциональных элементов, подвижных устройств, роботов можно придерживатся концепции заводных механизмов - любые подвижные части можно дополнять шестеренками где это смотрится органично</p>
+                <p>Если брать конкретно рободевочек-стражей - они являются по сути альтерэго их создателей - они живут пока жив их создатель, имеют частичку его души \ характера, испытывают эмоции и подпитываются маной \ энергией родителя - 
+                как правило созданием таких автоматонов занимаются опытные маги.</p>
+                <p>Оживление других стражей, механических марионеток-пешек обычно не преследует наследования персональных качеств и они создаются по более простому принципу и обычно имеют какую то конкретную цель-задачу и 
+                живут пока не закончится запас маны или не будет достигнута цель.</p>
+                
+                <h3>Королевство лисичек</h3>
+                <p><a href="#ruta">Рута</a>, её подручный и рободевочки относятся к Королевству лисичек - королевская семья и многие простые жители выделяются
+                характерными ушками и хвостиками - обмундирование, общая эстетика окружения может так же использовать эти элементы</p>
+                <p>На королевство часто наподают вражеские робо-пешки и в округе за стенами замка как правило бывает не безопасно - хоть и не все жители могут жить только в стенах замка - посевные поля и часть поселений находится поблизости и менее защищена.
+                Основную опасность представляет запретный лес - где скопилось большое количество пауков, так же могут представлять опасность вражеские робо-пешки разведчики</p>
+                          
+            <div class="previews" data-key="world">
+                <div class="preview world-preview" data-image="orig/knight_girl (3).png" style="background-image : url('img/look/knight_girl (3).png')"></div>
+                <div class="preview world-preview" data-image="orig/bots (2).png" style="background-image : url('img/look/bots (2).png')"></div>
+                <div class="preview world-preview" data-image="orig/miscc2.png" style="background-image : url('img/look/miscc2.png')"></div>
+                <div class="preview world-preview" data-image="orig/bots3.png" style="background-image : url('img/look/bots3.png')"></div>
+                <div class="preview world-preview" data-image="orig/foxbot (1_0).png" style="background-image : url('img/look/foxbot (1_0).png')"></div>
+                <div class="preview world-preview" data-image="orig/foxbot3.png" style="background-image : url('img/look/foxbot3.png')"></div>
+                
+                <div style="clear : both"></div>
+            </div>
+            
+            </div>
+        </div>
+        
+    
+            <div class="nw-page-block">
+            
+            <div class="nw-page-character-info">
+                <img src="img/avatars/ruta256.png">
+                <div>
+                    <h2>Рута</h2>
+                    <p>Пол : Женский</p>
+                    <p>Возраст : 24 года</p>
+                </div>
+                <div style="clear : both"></div>
+            </div>
+            
+            
+            <div class="nw-page-block-content">
+            
+            <p>Лисичка-кординатор королевского отдела разработки и защиты. Жизнерадосная и увлеченная работой девушка, не имеет магических способностей. По профессии занимается инженерным делом и в основном на ее плечах проектирование форм и механических частей роботов.</p>
+            <p>Оживление робо-девочек проходит совместно с участием магов которые комбинируют души как самой Руты так и свои и создают персоналии для новых робо-стражей.</p>
+            <p>Под ее руководством изготовлено множество рободевочек-стражей и других защитных роботов. Соответственно многие рободевочки тесно связаны с ней.</p>
+            <p>По скольку она ответственна за весь отдел разработки, так же занимается поиском полезных кадров себе в команду, в частности магов.</p> 
+            <p>Из за излишней самоуверенности решила самостоятельно отправится исследовать местный лес без должной защиты т.к. слышала что там можно найти опытную ведьму - Машу, которая могла бы быть полезна в ее работе.</p> 
+          
+            </div>           
+           <div class="previews" data-key="world">
+                <div class="preview world-preview" data-image="orig/ruta/1.png" style="background-image : url('img/look/ruta/1.png')"></div>
+                <div class="preview world-preview" data-image="orig/ruta/2.png" style="background-image : url('img/look/ruta/2.png')"></div>
+                <div class="preview world-preview" data-image="orig/ruta/3.png" style="background-image : url('img/look/ruta/3.png')"></div>
+                <div class="preview world-preview" data-image="orig/ruta/4.png" style="background-image : url('img/look/ruta/4.png')"></div>
+                <div class="preview world-preview" data-image="orig/ruta/5.png" style="background-image : url('img/look/ruta/5.png')"></div>
+                <div class="preview world-preview" data-image="orig/ruta/6.png" style="background-image : url('img/look/ruta/6.png')"></div>
+                
+            <div style="clear : both"></div></div>
+        </div>
+        
+        <div class="nw-page-block">
+        
+      
+            <div class="nw-page-character-info">
+                <img src="img/avatars/masha256.png">
+                <div>
+                    <h2>Маша</h2>
+                    <p>Пол : Женский</p>
+                    <p>Возраст : 21 год</p>
+                </div>
+                <div style="clear : both"></div>
+            </div>
+            
+            <div class="nw-page-block-content">
+                <p>Ведьмочка. Жила одиночкой в лесу поодаль от Королевства лисичек. В основном занимается собирательством и практикуется в магии. Следит за тем что происходит в королевстве и иногда выполняет охоту за вознаграждение на
+                монстров, устранение опасностей за которые королевская администрация дает награду. В какой то момент к ней навязалась феечка Олеся которую Маша спасла в лесу от пауков. Маша привыкла жить одна но не стала выгонять феечку потому что феечка старалась быть полезной.</p> 
+                <p>Одержима поиском источников маны и организовала себе жилище недалеко от основных точек силы куда и часто делает вылазки для магических практик. В виду ее достаточных магических способностей лес для нее уже давно не представляет опасности хоть помимо животных там так же могут встречатся враждебные робо-пешки</p>
+            </div>
+            
+            
+            
+                                      
+            <div class="previews" data-key="world">
+                <div class="preview world-preview" data-image="orig/masha/1.png" style="background-image : url('img/look/masha/1.png')"></div>
+                <div class="preview world-preview" data-image="orig/masha/2.png" style="background-image : url('img/look/masha/2.png')"></div>
+                <div class="preview world-preview" data-image="orig/masha/3.png" style="background-image : url('img/look/masha/3.png')"></div>
+                <div class="preview world-preview" data-image="orig/masha/4.png" style="background-image : url('img/look/masha/4.png')"></div>
+                <div class="preview world-preview" data-image="orig/masha/5.png" style="background-image : url('img/look/masha/5.png')"></div>
+                <div class="preview world-preview" data-image="orig/masha/6.png" style="background-image : url('img/look/masha/6.png')"></div>
+                
+                <div style="clear : both"></div>
+            </div>
+            
+        </div>
+        
+        <div class="nw-page-block">
+            
+            <div class="nw-page-character-info">
+                <img src="img/avatars/vampi.png">
+                <div>
+                    <h2>Вампирша</h2>
+                    <p>Пол : Женский</p>
+                    <p>Возраст : более 100 лет. Точный возраст неизвестен</p>
+                </div>
+                <div style="clear : both"></div>
+            </div>
+            
+            <div class="nw-page-block-content">
+                <p>В прошлой жизни была эльфом-рыцарем и служила в лисьем королевстве. Устала от всего на свете. Исследуя вампирское логово получила укус и сама обрекла себя на то чтобы стать вампиром.</p> 
+                <p>Долгое время продолжала жить в замке который принадлежал вампирам и обустроила его под себя. Вела ночной образ жизни и постепенно стала терять понимание нормальности, поскольку не могла безопасно взаимодействовать с людьми. 
+                Её вамирский замок со временем стал пристанищем большого количества магических монстров, пауков и другой живности, живность поместья распространялась по окружающим лесам и полям и портила жизнь окружающим.
+                В конечном счете за уничтожение её поместья была объявлена награда.</p>
+                <p>Маша взялась в качестве охотницы устранить вампиршу, но решила сохранить ей жизнь т.к. вампирша не растеряла остатки человечности и сама по себе опасности не представляет. Чтобы вампирша могла и дальше спокойно жить Маша попробовала исполнить сильное заклинание. Вампирша была заточена в астральном мире со всем замком. 
+                Часть пауков замка осталась в лесу, но замок и большая часть живности была устранена</p>
+                <p>Весь замок был перенесен в астральный мир - сохранилась почти вся архитектура и живность замка. </p>
+                <p>Через Машу некоторые отважные путники иногда могут попасть к вампирше в гости или по объявлению - вампирше нужно поддерживать чистоту в замке и боротся с пауками - по этому периодически она дает завуалированные объявления о поиске подходящих смелых горничных.
+                Пауки и прочие магические монстры вампиршу не трогают, а вот для случайных гостей могут представлять опасность. Чтобы вернуть поместью 
+                былой вид нужно устранить все логова монстров которыми успел порости замок. Вампирша рада гостям - она давно нискем не общалась но только безрассудные или очень смелые могут работать у нее.</p>
+                
+                <p>По скольку Рута хорошо знает Машу, она могла напросится к Вампирше в гости из любопытства или по поручению самой Маши. Для Вампирши любые новые люди вызввают большой интерес, по тому она будет старатся всячески привлечь внимание Руты и весьти себя прилично</p>
+           
+           </div>
+           
+           <div class="previews" data-key="world">
+                <div class="preview world-preview" data-image="orig/vampi/1.png" style="background-image : url('img/look/vampi/1.png')"></div>
+                <div class="preview world-preview" data-image="orig/vampi/2.png" style="background-image : url('img/look/vampi/2.png')"></div>
+                <div class="preview world-preview" data-image="orig/vampi/3.png" style="background-image : url('img/look/vampi/3.png')"></div>
+                <div class="preview world-preview" data-image="orig/vampi/4.png" style="background-image : url('img/look/vampi/4.png')"></div>
+                <div class="preview world-preview" data-image="orig/vampi/5.png" style="background-image : url('img/look/vampi/5.png')"></div>
+                
+            <div style="clear : both"></div></div>
+        </div>
+        
+        
+        <div class="nw-page-block">
+            
+            <div class="nw-page-character-info">
+                <img src="img/avatars/katya.png">
+                <div>
+                    <h2>Катерина и робо-стражи</h2>
+                </div>
+                <div style="clear : both"></div>
+            </div>
+            
+            <div class="nw-page-block-content">
+                  
+            <p>Катерина - одна из робо-девочек стражей. За счет высокого роста выглядит устрашающе. Сама по себе очень добрая и любознательная, является любимицей ушастой принцессы. Создана королевским отделом разработки. Для нее первостепенной является защита королевской семьи. </p>
+            <p>При дворе может быть много рободев - совместная разработка королевских магов и иженеров. Они могут как выполнять поручения так и быть вовлечены в социальную жизнь и просто радовать глаз окружающих</p>
+           
+           </div>
+           
+           <div class="previews" data-key="world">
+                <div class="preview world-preview" data-image="orig/katya/1.png" style="background-image : url('img/look/katya/1.png')"></div>
+                <div class="preview world-preview" data-image="orig/katya/2.png" style="background-image : url('img/look/katya/2.png')"></div>
+                <div class="preview world-preview" data-image="orig/katya/3.png" style="background-image : url('img/look/katya/3.png')"></div>
+                <div class="preview world-preview" data-image="orig/katya/4.png" style="background-image : url('img/look/katya/4.png')"></div>
+                <div class="preview world-preview" data-image="orig/katya/5.png" style="background-image : url('img/look/katya/5.png')"></div>
+                <div class="preview world-preview" data-image="orig/katya/6.png" style="background-image : url('img/look/katya/6.png')"></div>
+                <div class="preview world-preview" data-image="orig/katya/5.png" style="background-image : url('img/look/katya/7.png')"></div>
+                <div class="preview world-preview" data-image="orig/katya/6.png" style="background-image : url('img/look/katya/8.png')"></div>
+                
+            <div style="clear : both"></div></div>
+        </div>
+    
+        
+        
+    </div>
+    
+    <div style="clear : both;"></div>
+</div>
+
+
+<script src="js/kellyImageView.js?v=120824"></script>
+<script>
+
+	var galleryBlocks = document.getElementsByClassName('previews');		
+	if (galleryBlocks.length > 0) {
+					
+	
+        var imgView = document.createElement('div');
+            imgView.className = 'gallery-ImgView';
+            document.body.appendChild(imgView);
+            
+            imgViewer = new KellyImgView({
+                className : 'gallery-ImgView', 
+                viewerBlock : imgView, 
+                lazyHand : true,
+                zoomByMouse : true,
+                moveable : false, 
+                swipe : true, 
+                // lockMoveMethod : 'hideScroll',
+                // removePrevViewData : false,
+                lockMoveMethod : 'lockMove',
+                userEvents : {
+                    onClose : function() {},						
+                    onNextImage : function(self, nextImage, action) { },
+                    onShow : function(self, show) {},						
+                    onImageLoadFail : function(self) {
+                        
+                        self.cancelLoad();
+                        
+                        //handler.getTooltip().resetToDefaultOptions();                        
+                        //handler.getTooltip().setMessage(lng.s('Не удалось загрузить изображение', 'image_fail'));                        
+                        //handler.getTooltip().show(true);
+                        
+                    }
+                },
+            });
+    
+            imgViewer.addBaseButtons();				
+            
+            for (var i = 0; i < galleryBlocks.length; i++) {
+                imgViewer.addToGallery(galleryBlocks[i].getAttribute('data-key') + '-preview', galleryBlocks[i].getAttribute('data-key'));
+            }
+        
+	}
+</script>
+
 </body>
 </html>
