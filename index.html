@@ -120,7 +120,7 @@
         <div class="nw-page-block" id="ruta">
             
             <div class="nw-page-character-info">
-                <img src="img/avatars/ruta256.png">
+                <img loading="lazy" src="img/avatars/ruta256.png">
                 <div>
                     <h2>Рута</h2>
                     <p>Пол : Женский</p>
@@ -150,7 +150,7 @@
         
       
             <div class="nw-page-character-info">
-                <img src="img/avatars/masha256.png">
+                <img loading="lazy" src="img/avatars/masha256.png">
                 <div>
                     <h2>Маша</h2>
                     <p>Пол : Женский</p>
@@ -181,7 +181,7 @@
         
       
             <div class="nw-page-character-info">
-                <img src="img/avatars/olesya.png">
+                <img loading="lazy" src="img/avatars/olesya.png">
                 <div>
                     <h2>Феечка Олеся</h2>
                     <p>Пол : Женский</p>
@@ -363,62 +363,101 @@
     
     <div style="clear : both;"></div>
 </div>
-
-
 <script src="js/kellyImageView.js?v=120824"></script>
 <script>
+    var PREVIEW_BATCH_SIZE = 3;     
+    var PREVIEW_BATCH_DELAY = 180; 
 
-    
     var getScrollTop = function() {
-
         var scrollTop = (window.pageYOffset || document.documentElement.scrollTop) - (document.documentElement.clientTop || 0);
         return scrollTop;
     }
 
     var getViewport = function() {
-
-        var elem = (document.compatMode === "CSS1Compat") ? document.documentElement : document.body;    
+        var elem = (document.compatMode === "CSS1Compat") ? document.documentElement : document.body;
         return { screenHeight: elem.clientHeight, screenWidth: elem.clientWidth };
     }
-    
+
     var isInViewport = function(el, offset) {
         var rect = el.getBoundingClientRect();
-        
-        if (el.getAttribute('data-key') == 'ruta'){
-        
-        console.log(getScrollTop() + getViewport().screenHeight + offset);
-        console.log(rect.y + getScrollTop());
+
+        if (el.getAttribute('data-key') == 'ruta') {
+            console.log(getScrollTop() + getViewport().screenHeight + offset);
+            console.log(rect.y + getScrollTop());
         }
         if (getScrollTop() + getViewport().screenHeight + offset > rect.y + getScrollTop()) {
             return true;
         }
     }
-    
-    var renderPreviews = function(container) {    
-        container.querySelectorAll('.preview').forEach(preview => {
-            preview.style.backgroundImage = "url(img/look/" + preview.getAttribute('data-info-key') + '/' + preview.getAttribute('data-info-n') + '.png)';
-        });
-    }
+
+    var loadPreviewImage = function(preview) {
+        if (preview.getAttribute('data-loaded') === '1') return;
+
+        var key = preview.getAttribute('data-info-key');
+        var n = preview.getAttribute('data-info-n');
+        var url = 'img/look/' + key + '/' + n + '.png';
+
+        var img = new Image();
+        img.onload = function() {
+            preview.style.backgroundImage = "url(" + url + ")";
+            preview.setAttribute('data-loaded', '1');
+            requestAnimationFrame(function() {
+                preview.style.opacity = '1';
+            });
+        };
+        img.onerror = function() {
+            preview.setAttribute('data-loaded', '1');
+            preview.style.opacity = '1';
+        };
+        img.src = url;
+    };
+
+    // Порционно (медленно) рендерит все превью внутри контейнера
+    var renderPreviewsSlowly = function(container) {
+        if (container.getAttribute('data-rendering') === '1' ||
+            container.getAttribute('data-rendered') === '1') {
+            return;
+        }
+        container.setAttribute('data-rendering', '1');
+
+        var previews = Array.prototype.slice.call(container.querySelectorAll('.preview'));
+        var index = 0;
+
+        var step = function() {
+            var batch = previews.slice(index, index + PREVIEW_BATCH_SIZE);
+            batch.forEach(loadPreviewImage);
+            index += PREVIEW_BATCH_SIZE;
+
+            if (index < previews.length) {
+                setTimeout(step, PREVIEW_BATCH_DELAY);
+            } else {
+                container.setAttribute('data-rendered', '1');
+                container.removeAttribute('data-rendering');
+            }
+        };
+
+        step();
+    };
 
     var updateDynPos = function() {
-        
+
         var menu = document.getElementsByClassName('nw-menu-block')[0];
-        if (getViewport().screenWidth < 1000) {
+        if (menu && getViewport().screenWidth < 1000) {
             menu.classList.remove('nw-menu-block-fixed');
-            
-        } else {
-        
+
+        } else if (menu) {
+
             var header = document.querySelector('.nw-page-blocks .nw-page-block');
             var fixedHeight = header.getBoundingClientRect().y + getScrollTop() + 16;
             var width = 0;
-            
+
             if (!menu.getAttribute('data-width')) {
                 width = menu.getBoundingClientRect().width;
                 menu.setAttribute('data-width', width);
             } else {
                 width = parseInt(menu.getAttribute('data-width'));
             }
-            
+
             if (getScrollTop() > fixedHeight) {
                 menu.classList.add('nw-menu-block-fixed');
                 menu.style.width = width + 'px';
@@ -428,116 +467,117 @@
                 menu.removeAttribute('data-width');
             }
         }
-        
+
         document.querySelectorAll('.previews[data-num]').forEach(container => {
             if (!container.getAttribute('data-rendered') && isInViewport(container, 200)) {
-                renderPreviews(container);
-                container.setAttribute('data-rendered', 1);
+                renderPreviewsSlowly(container);
             }
         });
-    }
-    
+    };
+
     document.querySelectorAll('.previews[data-num]').forEach(container => {
         var num = parseInt(container.getAttribute('data-num'));
-    
-        //  <div class="preview world-preview" data-image="orig/katya/6.png" style="background-image : url('img/look/katya/6.png')"></div>
+
         for (var i = 0; i < num; i++) {
             var image = document.createElement('DIV');
-                image.className = 'preview ' + container.getAttribute('data-key') + '-preview';
-                image.setAttribute('data-image', "orig/" + container.getAttribute('data-key') + '/' + (i+1) + '.png');
-                
-                image.setAttribute('data-info-n', i+1);
-                image.setAttribute('data-info-key', container.getAttribute('data-key'));
-                
+            image.className = 'preview ' + container.getAttribute('data-key') + '-preview';
+            image.setAttribute('data-image', "orig/" + container.getAttribute('data-key') + '/' + (i + 1) + '.png');
+
+            image.setAttribute('data-info-n', i + 1);
+            image.setAttribute('data-info-key', container.getAttribute('data-key'));
+
+            // изначально прозрачное — проявится при подгрузке
+            image.style.opacity = '0';
+            image.style.transition = 'opacity 0.6s ease';
+
             container.appendChild(image);
         }
-        
+
         var end = document.createElement('DIV');
-            end.style.clear="both";
-            
-            container.appendChild(end);
+        end.style.clear = "both";
+
+        container.appendChild(end);
     });
-    
+
+    if ('IntersectionObserver' in window) {
+        var previewObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    renderPreviewsSlowly(entry.target);
+                    previewObserver.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            rootMargin: '200px 0px',  // начинаем грузить заранее
+            threshold: 0
+        });
+
+        document.querySelectorAll('.previews[data-num]').forEach(function(container) {
+            previewObserver.observe(container);
+        });
+    }
+
     window.addEventListener('resize', updateDynPos);
     window.addEventListener('scroll', updateDynPos);
-    
+
     updateDynPos();
-    
-    
+
     document.querySelectorAll('.nw-scroll a').forEach(function(anchor) {
-    
+
         anchor.addEventListener('click', function(e) {
-        
+
             console.log(1);
             e.preventDefault();
-            
+
             var targetID = this.getAttribute('href').substring(1);
             var targetElement = document.getElementById(targetID);
             if (targetElement) {
-            
-            
-                var offset = 16; 
+
+                var offset = 16;
                 var bodyRect = document.body.getBoundingClientRect().top;
                 var elementRect = targetElement.getBoundingClientRect().top;
                 var elementPosition = elementRect - bodyRect;
                 var offsetPosition = elementPosition - offset;
 
                 window.scrollTo({
-                  top: offsetPosition,
-                  behavior: 'smooth'
+                    top: offsetPosition,
+                    behavior: 'smooth'
                 });
-                
-              //  targetElement.scrollIntoView({
-              //   behavior: 'smooth'
-              // });
             }
         });
-      
-    });
-    
-    
-	var galleryBlocks = document.getElementsByClassName('previews');		
-	if (galleryBlocks.length > 0) {
-					
-	
-        var imgView = document.createElement('div');
-            imgView.className = 'gallery-ImgView';
-            document.body.appendChild(imgView);
-            
-            imgViewer = new KellyImgView({
-                className : 'gallery-ImgView', 
-                viewerBlock : imgView, 
-                lazyHand : true,
-                zoomByMouse : true,
-                moveable : false, 
-                swipe : true, 
-                // lockMoveMethod : 'hideScroll',
-                // removePrevViewData : false,
-                lockMoveMethod : 'lockMove',
-                userEvents : {
-                    onClose : function() {},						
-                    onNextImage : function(self, nextImage, action) { },
-                    onShow : function(self, show) {},						
-                    onImageLoadFail : function(self) {
-                        
-                        self.cancelLoad();
-                        
-                        //handler.getTooltip().resetToDefaultOptions();                        
-                        //handler.getTooltip().setMessage(lng.s('Не удалось загрузить изображение', 'image_fail'));                        
-                        //handler.getTooltip().show(true);
-                        
-                    }
-                },
-            });
-    
-            imgViewer.addBaseButtons();				
-            
-            for (var i = 0; i < galleryBlocks.length; i++) {
-                imgViewer.addToGallery(galleryBlocks[i].getAttribute('data-key') + '-preview', galleryBlocks[i].getAttribute('data-key'));
-            }
-        
-	}
-</script>
 
-</body>
-</html>
+    });
+
+    var galleryBlocks = document.getElementsByClassName('previews');
+    if (galleryBlocks.length > 0) {
+
+        var imgView = document.createElement('div');
+        imgView.className = 'gallery-ImgView';
+        document.body.appendChild(imgView);
+
+        imgViewer = new KellyImgView({
+            className: 'gallery-ImgView',
+            viewerBlock: imgView,
+            lazyHand: true,
+            zoomByMouse: true,
+            moveable: false,
+            swipe: true,
+            lockMoveMethod: 'lockMove',
+            userEvents: {
+                onClose: function() {},
+                onNextImage: function(self, nextImage, action) {},
+                onShow: function(self, show) {},
+                onImageLoadFail: function(self) {
+                    self.cancelLoad();
+                }
+            },
+        });
+
+        imgViewer.addBaseButtons();
+
+        for (var i = 0; i < galleryBlocks.length; i++) {
+            imgViewer.addToGallery(galleryBlocks[i].getAttribute('data-key') + '-preview', galleryBlocks[i].getAttribute('data-key'));
+        }
+    }
+</script>
